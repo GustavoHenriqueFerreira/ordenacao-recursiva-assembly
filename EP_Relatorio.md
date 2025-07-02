@@ -2,14 +2,14 @@
 
 ## 1. Introdução
 
-Este relatório detalha a implementação de dois algoritmos de ordenação, Ordenação por Inserção (complexidade O(n^2)) e Ordenação Rápida (Quicksort) (complexidade O(n log n)), em MIPS Assembly. O objetivo principal é desenvolver um programa que leia um vetor de números de ponto flutuante de um arquivo de entrada, ordene-o utilizando um dos métodos especificados e, em seguida, escreva o vetor ordenado de volta em um arquivo de saída. O trabalho segue as restrições de utilizar apenas instruções MIPS simples e a abordagem de prototipagem em C para facilitar a tradução para Assembly.
+Este relatório detalha a implementação de dois algoritmos de ordenação, Ordenação por Inserção - Insertion Sort (complexidade O(n^2)) e Ordenação Rápida - Quicksort (complexidade O(n log n)), em MIPS Assembly. O objetivo principal é desenvolver um programa que leia um vetor de números de ponto flutuante de um arquivo de entrada e ordenar utilizando um dos métodos especificados, em seguida, preencher o vetor ordenado de volta em um arquivo de saída. O trabalho segue as restrições de utilizar apenas instruções MIPS simples e a abordagem de prototipagem em C para facilitar a tradução para Assembly.
 
 ## 2. Requisitos do Projeto
 
 Os requisitos para este projeto são:
 
-*   Implementar Ordenação por Inserção (O(n^2)) em MIPS Assembly.
-*   Implementar Ordenação Rápida (O(n log n)) em MIPS Assembly.
+*   Implementar Ordenação por Inserção - Insertion Sort (O(n^2)) em MIPS Assembly.
+*   Implementar Ordenação Rápida - Quicksort (O(n log n)) em MIPS Assembly.
 *   A função principal de ordenação deve ter a assinatura `float ordenar(int tamanho, int tipo, float *vetor)`.
     *   `retorno (*float)`: Ponteiro para o vetor ordenado.
     *   `ordenar`: Nome da função em Assembly.
@@ -20,7 +20,7 @@ Os requisitos para este projeto são:
 *   Escrita do vetor ordenado de forma crescente no final do arquivo de entrada (ou em um novo arquivo de saída).
 *   O tamanho do vetor (`n`) não é conhecido a priori e deve ser determinado varrendo o arquivo.
 *   Uso exclusivo de instruções MIPS Assembly simples (ADD, SUB, ADDI, LW, SW, AND, BEQ, J, etc.).
-*   **Restrição Adicional:** Não é permitido o uso de instruções de ponto flutuante (`lwc1`, `swc1`, `mul.s`, `add.s`, `div.s`, `cvt.s.w`, `mtc1`, etc.). Operações com ponto flutuante devem ser simuladas usando lógica de inteiros.
+*   **Restrição Adicional:** Não é permitido o uso de instruções de ponto flutuante (`cvt.s.w`, `mtc1`, etc.). Operações com ponto flutuante devem ser simuladas usando lógica de inteiros.
 *   Documentação da lógica principal, código-fonte em Assembly e um relatório detalhado.
 *   Testes e depuração utilizando o simulador MARS.
 
@@ -70,9 +70,6 @@ void ordenacaoPorInsercao(float vetor[], int tamanho) {
     }
 }
 ```
-
-
-
 
 ### 4.2. Ordenação Rápida em C
 
@@ -1019,7 +1016,3 @@ O programa foi testado utilizando o simulador MARS. O arquivo `dadosEP2.txt` foi
 ## 8. Conclusão
 
 Este trabalho demonstrou a implementação de algoritmos de ordenação em MIPS Assembly sob restrições rigorosas de uso de instruções simples e manipulação manual de ponto flutuante. A representação de floats como pares de inteiros e a adaptação das lógicas de comparação e troca permitiram contornar as limitações, resultando em um programa funcional para ordenação de dados numéricos em arquivos. A experiência reforça a compreensão da arquitetura MIPS e da programação de baixo nível.
-
-
-
-

@@ -1,8 +1,6 @@
 # EP - Ordenação em MIPS Assembly
 
-Este repositório contém a implementação de dois algoritmos de ordenação, Ordenação por Inserção (O(n^2)) e Ordenação Rápida (O(n log n)), em MIPS Assembly. O programa lê um vetor de números de ponto flutuante de um arquivo, ordena-o usando um dos métodos escolhidos e escreve o vetor ordenado de volta no arquivo.
-
-**Importante:** Devido a restrições de uso de instruções simples, os números de ponto flutuante são representados e manipulados como pares de inteiros (parte inteira e parte decimal multiplicada por 1000). Todas as operações com floats são realizadas usando lógica de inteiros.
+O EP contém a implementação de dois algoritmos de ordenação: Ordenação por Inserção - Insertion Sort (O(n^2)) e Ordenação Rápida - Quicksort (O(n log n)) em C para MIPS Assembly. O programa lê um vetor de números de ponto flutuante de um arquivo e usando um dos métodos escolhidos escreve o vetor ordenado de volta no arquivo.
 
 ## Requisitos
 
@@ -14,7 +12,7 @@ Este repositório contém a implementação de dois algoritmos de ordenação, O
 *   `ep_mips_sorting/`
     *   `README.md`: Este arquivo.
     *   `EP_Relatorio.md`: Documentação detalhada do projeto, incluindo lógica, implementação e análise.
-    *   `c_implementations/`
+    *   `algoritmos_ordenacao/`
         *   `insertion_sort.c`: Implementação da Ordenação por Inserção em C.
         *   `quicksort.c`: Implementação da Ordenação Rápida em C.
     *   `mips_assembly/`
@@ -23,10 +21,10 @@ Este repositório contém a implementação de dois algoritmos de ordenação, O
         *   `arquivo_io.asm`: Rotinas de leitura e escrita de arquivos em MIPS.
         *   `ordenar.asm`: Função `ordenar` principal em MIPS.
         *   `principal.asm`: Ponto de entrada principal do programa MIPS.
-    *   `test_files/`
+    *   `arquivos_testes/`
         *   `dadosEP2.txt`: Arquivo de entrada de exemplo (fornecido pelo professor).
         *   `saida_ordenada.txt`: Arquivo de saída gerado pelo programa.
 
 ## Como Compilar e Executar
 
-Detalhes sobre como compilar os códigos C e executar os códigos MIPS no simulador MARS serão fornecidos no `EP_Relatorio.md`.
+Detalhes sobre como compilar os códigos C e executar os códigos MIPS no simulador MARS fornecidos no `EP_Relatorio.md`.
