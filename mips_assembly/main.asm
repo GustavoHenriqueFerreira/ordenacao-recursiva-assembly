@@ -1,4 +1,3 @@
-```mips
 # principal.asm
 # Ponto de entrada principal do programa MIPS para o EP de Ordenação.
 # Orquestra a leitura do arquivo, chamada da função ordenar e escrita do resultado.
@@ -44,6 +43,3 @@ main:
     # --- 4. Encerrar o programa ---
     addi $v0, $zero, 10          # código de syscall para sair
     syscall
-```
-
-

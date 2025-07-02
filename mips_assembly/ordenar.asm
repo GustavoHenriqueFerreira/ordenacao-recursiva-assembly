@@ -1,4 +1,3 @@
-```mips
 # ordenar.asm
 # Implementação da função ordenar(int tamanho, int tipo, int *vetor)
 # Esta função agora lida com o vetor de floats representado como pares de inteiros.
@@ -57,6 +56,3 @@ fim_ordenar:
     lw $s2, 0($sp)
     addi $sp, $sp, 16
     jr $ra
-```
-
-

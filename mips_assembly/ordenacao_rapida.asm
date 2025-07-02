@@ -1,4 +1,3 @@
-```mips
 # ordenacao_rapida.asm
 # Implementação da Ordenação Rápida (Quicksort) em MIPS Assembly
 # Lida com números de ponto flutuante armazenados como pares de inteiros:
@@ -192,6 +191,3 @@ fim_ordenacao_rapida:
     lw $s2, 0($sp)
     addi $sp, $sp, 16
     jr $ra
-```
-
-

@@ -1,4 +1,3 @@
-```mips
 # ordena.asm
 # Implementação da função ordena(int tam, int tipo, float *vetor)
 # $a0: tam (int)
@@ -56,6 +55,3 @@ ordena_end:
     lw $s2, 0($sp)
     addi $sp, $sp, 16
     jr $ra
-```
-
-

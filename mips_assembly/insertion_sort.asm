@@ -1,4 +1,3 @@
-```mips
 # ordenacao_por_insercao.asm
 # Implementação da Ordenação por Inserção em MIPS Assembly
 # Assinatura da função: void ordenacaoPorInsercao(float vetor[], int tamanho)
@@ -76,6 +75,3 @@ fim_laco_externo:
     # add $sp, $sp, 12
 
     jr $ra                  # Retorna da função
-```
-
-

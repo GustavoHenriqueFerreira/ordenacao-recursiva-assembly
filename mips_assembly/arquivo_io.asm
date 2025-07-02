@@ -1,4 +1,3 @@
-```mips
 # arquivo_io.asm
 # Rotinas para leitura e escrita de números de ponto flutuante em arquivos
 # Implementado usando apenas instruções de inteiro e lógica manual para floats.
@@ -438,6 +437,3 @@ trata_zero:
     lw $ra, 0($sp)
     addi $sp, $sp, 4
     jr $ra
-```
-
-

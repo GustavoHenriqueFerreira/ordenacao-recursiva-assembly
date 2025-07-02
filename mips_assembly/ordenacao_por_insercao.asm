@@ -1,4 +1,3 @@
-```mips
 # ordenacao_por_insercao.asm
 # Implementação da Ordenação por Inserção em MIPS Assembly
 # Lida com números de ponto flutuante armazenados como pares de inteiros:
@@ -107,6 +106,3 @@ fim_laco_externo:
     addi $sp, $sp, 16
 
     jr $ra                  # Retorna da função
-```
-
-

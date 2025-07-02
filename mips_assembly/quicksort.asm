@@ -1,4 +1,3 @@
-```mips
 # ordenacao_rapida.asm
 # Implementação da Ordenação Rápida (Quicksort) em MIPS Assembly
 # Assinatura da função principal: void ordenacaoRapida(float vetor[], int baixo, int alto)
@@ -165,6 +164,3 @@ fim_ordenacao_rapida:
     lw $s2, 0($sp)
     addi $sp, $sp, 16
     jr $ra
-```
-
-

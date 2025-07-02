@@ -1,4 +1,3 @@
-```mips
 # arquivo_io.asm
 # Rotinas para leitura e escrita de floats em arquivos
 # Utiliza syscalls do MARS
@@ -309,6 +308,3 @@ fim_laco_escrita_sucesso:
     lw $s3, 0($sp)
     addi $sp, $sp, 20
     jr $ra
-```
-
-
