@@ -1,130 +1,3 @@
-# Relatório do EP: Implementação de Algoritmos de Ordenação em MIPS Assembly
-
-## 1. Introdução
-
-Este relatório detalha a implementação de dois algoritmos de ordenação, Ordenação por Inserção - Insertion Sort (complexidade O(n^2)) e Ordenação Rápida - Quicksort (complexidade O(n log n)), em MIPS Assembly. O objetivo principal é desenvolver um programa que leia um vetor de números de ponto flutuante de um arquivo de entrada e ordenar utilizando um dos métodos especificados, em seguida, preencher o vetor ordenado de volta em um arquivo de saída. O trabalho segue as restrições de utilizar apenas instruções MIPS simples e a abordagem de prototipagem em C para facilitar a tradução para Assembly.
-
-## 2. Requisitos do Projeto
-
-Os requisitos para este projeto são:
-
-*   Implementar Ordenação por Inserção - Insertion Sort (O(n^2)) em MIPS Assembly.
-*   Implementar Ordenação Rápida - Quicksort (O(n log n)) em MIPS Assembly.
-*   A função principal de ordenação deve ter a assinatura `float ordenar(int tamanho, int tipo, float *vetor)`.
-    *   `retorno (*float)`: Ponteiro para o vetor ordenado.
-    *   `ordenar`: Nome da função em Assembly.
-    *   `int tamanho`: Tamanho do vetor.
-    *   `int tipo`: Especifica o método de ordenação (e.g., 0 para Ordenação por Inserção, 1 para Ordenação Rápida).
-    *   `float *vetor`: Ponteiro para o vetor de valores a serem ordenados.
-*   Leitura de dados de um arquivo de entrada (passado como argumento para o programa).
-*   Escrita do vetor ordenado de forma crescente no final do arquivo de entrada (ou em um novo arquivo de saída).
-*   O tamanho do vetor (`n`) não é conhecido.
-*   Uso exclusivo de instruções MIPS Assembly simples (ADD, SUB, ADDI, LW, SW, AND, BEQ, J, etc.).
-*   **Restrição Adicional:** Não é permitido o uso de instruções de ponto flutuante (`cvt.s.w`, `mtc1`, etc.). Operações com ponto flutuante devem ser simuladas usando lógica de inteiros.
-*   Documentação da lógica principal, código-fonte em Assembly e um relatório detalhado.
-*   Testes e depuração utilizando o simulador MARS.
-
-## 3. Metodologia de Desenvolvimento
-
-Primeiramnete, necessário implementar os algoritmos em C, de forma simplificada, para então realizar a tradução para MIPS Assembly. As fases do desenvolvimento são:
-
-1.  **Planejamento e Estruturação:** Definição da estrutura do projeto e criação dos arquivos de documentação.
-2.  **Implementação em C:** Desenvolvimento da Ordenação por Inserção e Ordenação Rápida em C, focando na clareza e simplicidade para facilitar a tradução.
-3.  **Tradução para MIPS Assembly:** Conversão dos algoritmos C para MIPS Assembly, utilizando apenas instruções simples.
-4.  **Rotinas de E/S em MIPS:** Implementação das funcionalidades de leitura e escrita de arquivos em MIPS.
-5.  **Integração:** Criação da função `ordenar` em MIPS e integração com os algoritmos de ordenação e as rotinas de E/S.
-6.  **Testes e Depuração:** Verificação do funcionamento do programa no simulador MARS com diversos casos de teste.
-7.  **Documentação e Análise:** Elaboração do relatório final, incluindo a análise de desempenho dos algoritmos.
-
-## 4. Implementação dos Algoritmos em C
-
-### 4.1. Ordenação por Inserção em C
-
-A Ordenação por Inserção é um algoritmo de ordenação simples que constrói a matriz final ordenada um item por vez. Ele itera sobre o array, pegando cada elemento e realizando a inserção em sua posição correta na parte já ordenada do array. É eficiente para listas pequenas ou quase ordenadas, mas sua complexidade de tempo é O(n^2) no pior e caso médio.
-
-**Lógica:**
-1.  O algoritmo começa com o segundo elemento do array (índice 1), considerando o primeiro elemento (índice 0) como uma sub-lista já ordenada.
-2.  Para cada elemento `chave` (a partir do segundo), ele é comparado com os elementos da sub-lista ordenada à sua esquerda.
-3.  Se um elemento na sub-lista ordenada for maior que `chave`, ele é deslocado uma posição para a direita.
-4.  Este processo de deslocamento continua até que um elemento menor ou igual a `chave` seja encontrado, ou o início da sub-lista seja alcançado.
-5.  `chave` é então inserida na posição correta.
-6.  O processo se repete para todos os elementos restantes do array.
-
-**Código C:**
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-void ordenacaoPorInsercao(float vetor[], int tamanho) {
-    int i, j;
-    float chave;
-    for (i = 1; i < tamanho; i++) {
-        chave = vetor[i];
-        j = i - 1;
-
-        while (j >= 0 && vetor[j] > chave) {
-            vetor[j + 1] = vetor[j];
-            j = j - 1;
-        }
-        vetor[j + 1] = chave;
-    }
-}
-```
-
-### 4.2. Ordenação Rápida em C
-
-A Ordenação Rápida é um algoritmo de ordenação eficiente baseado na estratégia de divisão e conquista. Ele seleciona um elemento como (pivô) e particiona o array em torno do pivô, colocando todos os elementos menores que o pivô antes dele e todos os elementos maiores depois dele. Essa etapa é aplicada recursivamente às sub-listas e sua complexidade média é O(n log n), tornando um dos algoritmos de ordenação mais rápidos na prática.
-
-**Lógica:**
-1.  **Escolha do Pivô:** Um elemento do array é escolhido como pivô (nesta implementação simples, o último elemento do sub-array é usado como pivô).
-2.  **Particionamento:** O array é rearranjado de forma que todos os elementos menores que o pivô fiquem à sua esquerda e todos os elementos maiores fiquem à sua direita. O pivô está agora em sua posição final ordenada.
-3.  **Recursão:** A Ordenação Rápida é então chamada recursivamente para os sub-arrays à esquerda e à direita do pivô.
-4.  **Caso Base:** A recursão termina quando um sub-array tem zero ou um elemento, pois um array com um único elemento já está ordenado.
-
-**Código C:**
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-void trocar(float* a, float* b) {
-    float temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-int particionar(float vetor[], int baixo, int alto) {
-    float pivo = vetor[alto];
-    int i = (baixo - 1);
-
-    for (int j = baixo; j <= alto - 1; j++) {
-        if (vetor[j] < pivo) {
-            i++;
-            trocar(&vetor[i], &vetor[j]);
-        }
-    }
-    trocar(&vetor[i + 1], &vetor[alto]);
-    return (i + 1);
-}
-
-void ordenacaoRapida(float vetor[], int baixo, int alto) {
-    if (baixo < alto) {
-        int indice_pivo = particionar(vetor, baixo, alto);
-        ordenacaoRapida(vetor, baixo, indice_pivo - 1);
-        ordenacaoRapida(vetor, indice_pivo + 1, alto);
-    }
-}
-```
-
-## 5. Implementação dos Algoritmos em MIPS Assembly (com lógica de inteiros para floats)
-
-Devido à restrição de não utilizar instruções de ponto flutuante, os números de ponto flutuante são representados e manipulados como pares de inteiros: uma parte inteira e uma parte decimal (multiplicada por 1000 para manter precisão). Por exemplo, 3.14 é armazenado como (3, 140) e 2.1 como (2, 100). As comparações e trocas são realizadas com base nesses pares de inteiros.
-
-### 5.1. Rotinas de Leitura e Escrita de Arquivos (`arquivo_io.asm`)
-
-As rotinas de E/S foram adaptadas para ler e escrever esses pares de inteiros, convertendo strings de números decimais para a representação de par de inteiros na leitura e vice-versa na escrita. A função `converterInteiroParaString` foi implementada para auxiliar na escrita.
-
-**Código MIPS (arquivo_io.asm):**
-```mips
 # arquivo_io.asm
 # Rotinas para leitura e escrita de números de ponto flutuante em arquivos
 # Implementado usando apenas instruções de inteiro e lógica manual para floats.
@@ -564,14 +437,7 @@ trata_zero:
     lw $ra, 0($sp)
     addi $sp, $sp, 4
     jr $ra
-```
-
-### 5.2. Ordenação por Inserção em MIPS Assembly (`ordenacao_por_insercao.asm`)
-
-A tradução da Ordenação por Inserção de C para MIPS Assembly foi adaptada para manipular os floats como pares de inteiros. As comparações (`vetor[j] > chave`) agora envolvem a comparação das partes inteiras e, se iguais, das partes decimais. As operações de atribuição (`vetor[j + 1] = vetor[j]`) e (`vetor[j + 1] = chave`) agora movem ambos os componentes (inteiro e decimal) do float.
-
-**Código MIPS (ordenacao_por_insercao.asm):**
-```mips
+    
 # ordenacao_por_insercao.asm
 # Implementação da Ordenação por Inserção em MIPS Assembly
 # Lida com números de ponto flutuante armazenados como pares de inteiros:
@@ -680,14 +546,7 @@ fim_laco_externo:
     addi $sp, $sp, 16
 
     jr $ra                  # Retorna da função
-```
-
-### 5.3. Ordenação Rápida em MIPS Assembly (`ordenacao_rapida.asm`)
-
-A Ordenação Rápida também foi feita para operar com a representação de floats como pares de inteiros. As funções `trocar` e `particionar` em C foram implementadas em MIPS (lógica) para realizar comparações e movimentos de dados em pares de inteiros, garantindo a ordenação correta sem o uso de instruções de ponto flutuante.
-
-**Código MIPS (ordenacao_rapida.asm):**
-```mips
+    
 # ordenacao_rapida.asm
 # Implementação da Ordenação Rápida (Quicksort) em MIPS Assembly
 # Lida com números de ponto flutuante armazenados como pares de inteiros:
@@ -881,14 +740,7 @@ fim_ordenacao_rapida:
     lw $s2, 0($sp)
     addi $sp, $sp, 16
     jr $ra
-```
-
-### 5.4. Função `ordenar` em MIPS Assembly (`ordenar.asm`)
-
-A função `ordenar` foi implementada para receber um ponteiro para `int*` (o vetor de pares de inteiros) e chamar as novas versões das funções de ordenação (`ordenacaoPorInsercao` e `ordenacaoRapida`) que operam com essa representação.
-
-**Código MIPS (ordenar.asm):**
-```mips
+    
 # ordenar.asm
 # Implementação da função ordenar(int tamanho, int tipo, int *vetor)
 # Esta função agora lida com o vetor de floats representado como pares de inteiros.
@@ -947,14 +799,7 @@ fim_ordenar:
     lw $s2, 0($sp)
     addi $sp, $sp, 16
     jr $ra
-```
-
-### 5.5. Função Principal em MIPS Assembly (`principal.asm`)
-
-A função `main` (agora `principal.asm`) foi atualizada para usar o arquivo de teste `dadosEP2.txt` e para alocar um buffer maior para o vetor, considerando que cada float agora ocupa 8 bytes (duas palavras).
-
-**Código MIPS (principal.asm):**
-```mips
+    
 # principal.asm
 # Ponto de entrada principal do programa MIPS para o EP de Ordenação.
 # Orquestra a leitura do arquivo, chamada da função ordenar e escrita do resultado.
@@ -1000,16 +845,3 @@ main:
     # --- 4. Encerrar o programa ---
     addi $v0, $zero, 10          # código de syscall para sair
     syscall
-```
-
-## 6. Testes e Depuração com MARS
-
-O programa foi testado utilizando o simulador MARS e o arquivo `dadosEP2.txt` foi utilizado como entrada. A depuração foi realizada passo a passo para verificar o correto funcionamento das rotinas de leitura, ordenação (tanto Inserção quanto Quicksort) e escrita, garantindo que a manipulação dos floats como pares de inteiros e as comparações personalizadas funcionassem conforme o esperado. Por fim, o arquivo de saída `saida_ordenada.txt` foi verificado para confirmar a ordenação correta dos dados.
-
-## 7. Análise de Desempenho
-
-(Esta seção seria preenchida após a execução e coleta de dados de desempenho no MARS, comparando o tempo de execução para diferentes tamanhos de entrada para Insertion Sort e Quicksort. Seria necessário um script ou procedimento para automatizar a coleta de tempos no MARS para diferentes entradas e tipos de ordenação.)
-
-## 8. Conclusão
-
-Este Exercício-Programa demonstrou a implementação de algoritmos de ordenação em MIPS Assembly sob restrições rigorosas de uso de instruções simples e manipulação manual de ponto flutuante. A representação de floats como pares de inteiros e a adaptação das lógicas de comparação e troca permitiram contornar as limitações, resultando em um programa funcional para ordenação de dados numéricos em arquivos.
